@@ -40,13 +40,19 @@
     <h2 class="text-3xl font-bold text-center mb-10">VPS Plans</h2>
 
     <div 
-      x-data="{ active: 0, total: 4, interval: null }" 
+      x-data="{ 
+        current: 0,
+        total: 4,
+        interval: null,
+        next() { if (this.current < this.total - 1) this.current++; },
+        prev() { if (this.current > 0) this.current--; }
+      }"
       class="relative overflow-hidden"
     >
       
       <div 
         class="flex transition-transform duration-500 ease-in-out"
-        :style="`transform: translateX(-${active * 100 / (window.innerWidth < 768 ? 1 : 3)}%);`"
+        :style="`transform: translateX(-${current * (100 / (window.innerWidth < 768 ? 1 : 3))}%);`"
       >
         
         <div class="w-full md:w-1/3 flex-shrink-0 p-4">
@@ -143,7 +149,8 @@
 
       
       <button 
-        @click="active = (active - 1 + total) % total" 
+        @click="prev();" 
+        :disabled="current === 0"
         class="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white border rounded-full shadow hover:bg-indigo-100 transition"
       >
         ‹
@@ -151,7 +158,8 @@
 
       
       <button 
-        @click="active = (active + 1) % total" 
+        @click="next();"
+        :disabled="current === total - (window.innerWidth < 768 ? 1 : 3)"
         class="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white border rounded-full shadow hover:bg-indigo-100 transition"
       >
         ›
@@ -159,20 +167,25 @@
     </div>
   </div>
 </section>
-
-  <section id="cPannel-plans" class="py-20 bg-white">
+  <section id="cPannel-plans" class="py-20 bg-gray-50">
   <div class="container mx-auto px-6 relative">
 
     <h2 class="text-3xl font-bold text-center mb-10">cPannel Plans</h2>
 
     <div 
-      x-data="{ active: 0, total: 4, interval: null }"
+      x-data="{ 
+        current: 0,
+        total: 4,
+        interval: null,
+        next() { if (this.current < this.total - 1) this.current++; },
+        prev() { if (this.current > 0) this.current--; }
+      }"
       class="relative overflow-hidden"
     >
       
       <div 
         class="flex transition-transform duration-500 ease-in-out"
-        :style="`transform: translateX(-${active * 100 / (window.innerWidth < 768 ? 1 : 3)}%);`"
+        :style="`transform: translateX(-${current * (100 / (window.innerWidth < 768 ? 1 : 3))}%);`"
       >
         
         <div class="w-full md:w-1/3 flex-shrink-0 p-4">
@@ -192,7 +205,6 @@
                 <p class="text-2xl font-bold text-indigo-600">€ 3.95 <span class="text-base font-normal text-gray-600">/ month</span></p>
                 <p class="text-gray-500 text-sm">€ 43.80 / year <span class="text-green-600 font-semibold">(Save 8%)</span></p>
             </div>
-
 
             <a href="#" class="inline-block mt-6 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Select Plan</a>
           </div>
@@ -270,7 +282,8 @@
 
       
       <button 
-        @click="active = (active - 1 + total) % total" 
+        @click="prev();" 
+        :disabled="current === 0"
         class="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white border rounded-full shadow hover:bg-indigo-100 transition"
       >
         ‹
@@ -278,7 +291,8 @@
 
       
       <button 
-        @click="active = (active + 1) % total" 
+        @click="next();"
+        :disabled="current === total - (window.innerWidth < 768 ? 1 : 3)"
         class="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white border rounded-full shadow hover:bg-indigo-100 transition"
       >
         ›
